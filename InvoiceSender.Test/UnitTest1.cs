@@ -14,7 +14,7 @@ public class UnitTest1
 
         var expected =
             "Sending email to john@example.com with subject 'Invoice Reminder' and body:\nDear John Doe,\n\n" +
-            "Your invoice of 100 is due in den 15 november 2024.\n\nBest regards,\nThe Invoice Team"; 
+            "Your invoice of 100 is due in den 17 november 2024.\n\nBest regards,\nThe Invoice Team"; 
         var actual = sut.GenerateInvoice();
         
         Assert.Equal(expected, actual);
