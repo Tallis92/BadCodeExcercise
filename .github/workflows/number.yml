@@ -58,9 +58,9 @@ jobs:
         month=$(date +%m) 
         if [ "$today" -eq "13" ] && [ "$month" -eq "12" ]; then
             echo "Grattis på födelsedagen! *Paket emoji och kalaspang emoji* Hoppas du har en någorlunda okej dag!"
-          else
+        else
             echo "Det är inte din födelsedag din nolla!"
-            exit 0
+            exit 1
   
 
         
