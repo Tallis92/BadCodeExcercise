@@ -18,16 +18,15 @@ jobs:
   check-birthday-cron:
     runs-on: ubuntu-latest
     steps:
-    - name: Birthday-greeting
-      if: success()
-      run: |
-        echo "Grattis på födelsedagen! *Paket emoji och kalaspang emoji* Hoppas du har en någorlunda okej dag!"
-        echo "Din fulfina jävel!"
-    - name: Non-birthday-greeting
-      if: failure()
-      run: |
-        echo "Det är inte din födelsedag din nolla!"
-        echo "Bitch!"
+     - name: Birthday Greeting
+       if: ${{ (format('{0:MM-dd}', github.event.schedule) == '12-13') }}
+       run: |
+          echo "Grattis på födelsedagen! 🎁 🎉 Hoppas du har en fantastisk dag!"
+
+     - name: Non-Birthday Greeting
+       if: ${{ (format('{0:MM-dd}', github.event.schedule) != '12-13') }}
+       run: |
+          echo "Det är inte din födelsedag idag!"
       
 
         
