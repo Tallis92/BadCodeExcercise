@@ -60,7 +60,8 @@ jobs:
             echo "Grattis på födelsedagen! *Paket emoji och kalaspang emoji* Hoppas du har en någorlunda okej dag!"
         else
             echo "Det är inte din födelsedag din nolla!"
-            exit 1
+            exit 0
+        fi
   
 
         
