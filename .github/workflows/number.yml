@@ -62,29 +62,8 @@ jobs:
             echo "Det är inte din födelsedag din nolla!"
             exit 0
         fi
-        
-  check-birthday:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Check Birthday
-      id: birthday-check
-      run: |
-        today=$(date +%d)
-        month=$(date +%m) 
-        if [ "$today" -eq "13" ] && [ "$month" -eq "12" ]; then  
-          echo "::set-output name=success::true"
-        else
-            echo "::set-output name=success::false"
-        fi
-    - name: Send Birthday greeting
-      if: steps.birthday-check.outputs.success == 'true'
-      run: echo "Grattis på födelsedagen! *Paket emoji och kalaspang emoji* Hoppas du har en någorlunda okej dag!"
+  #birthday greeting was here
 
-    - name: Don't send birthday greeting
-      if: steps.birthday-check.outputs.success == 'false'
-      run: | 
-        echo "Det är inte din födelsedag din nolla!"
-        exit 0
 
   check-birthday-cron:
     runs-on: ubuntu-latest
