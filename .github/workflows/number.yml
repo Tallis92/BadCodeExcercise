@@ -13,58 +13,8 @@ on:
   - cron: '* * 13 12 *'
         
 jobs:
-  check-input:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Check if correct number
-      run: |
-        echo "Failcheck..."
-        numberInput=${{ github.event.inputs.number_thing }}
-        if (( numberInput < 7 )); then
-          exit 1
-        fi    
-  continue:
-    runs-on: ubuntu-latest
-    env:
-      startText: "Talet du är ute efter är..."
-    steps:
-    - name: Set two variables together
-      env: 
-        endText: '47!'
-      run: echo "${{env.startText}} ${{env.endText}}"
-      
-  build-project:
-    runs-on: ${{ matrix.os }}
-    
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        version: ['8.0', '7.0', '6.0']
-    steps:
-    - name: checkout
-      uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{matrix.version}}
-    - name: Build     
-      run: dotnet build
-  check-date:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Check Birthday
-      run: |
-        today=$(date +%d)
-        month=$(date +%m) 
-        if [ "$today" -eq "13" ] && [ "$month" -eq "12" ]; then
-            echo "Grattis på födelsedagen! *Paket emoji och kalaspang emoji* Hoppas du har en någorlunda okej dag!"
-        else
-            echo "Det är inte din födelsedag din nolla!"
-            exit 0
-        fi
+  
   #birthday greeting was here
-
-
   check-birthday-cron:
     runs-on: ubuntu-latest
     steps:
