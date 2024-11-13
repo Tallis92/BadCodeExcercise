@@ -1,0 +1,27 @@
+name: Ta emot viktig input!
+
+on:
+  workflow_dispatch:
+    inputs: 
+      numberInput:
+        description: "Input very important number plz"
+        required: true
+        type: int
+        default: '1'
+
+jobs:
+  check-input:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check if correct number
+      run: |
+        echo "Failcheck..."
+        if [ "{{inputs.numberInput}}" < 7 ]; then
+          exit 1
+        fi
+  continue:
+    runs-on: ubuntu-latest
+    steps:
+    - name: print
+      run: echo "Allt okej!"
+        
