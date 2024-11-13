@@ -8,11 +8,6 @@ on:
         required: true
         type: string
         default: '1'
-      should_fail:
-        description: 'Shall the step fail? (yes/no)'
-        required: true
-        type: string
-        default: 'no'
 
 jobs:
   check-input:
@@ -25,24 +20,15 @@ jobs:
         if (( numberInput < 7 )); then
           exit 1
         fi    
-  build-project:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Step that can fail
-      run: |
-        echo "Failcheck..."
-        if [ "${{inputs.should_fail}}" = "yes" ]; then
-          exit 1
-        fi
-        
-    - uses: actions/checkout@v4
-    - name: Build solution
-      run: dotnet build
-
-
   continue:
     runs-on: ubuntu-latest
+    env:
+      startText: "Talet du är ute efter är..."
     steps:
-    - name: print
-      run: echo "Allt okej!"
+    - name: Set two variables together
+      env: 
+        endText: ' 47!'
+      run: echo "${{env.startText}} ${{env.endText}}"
+    
+  
         
