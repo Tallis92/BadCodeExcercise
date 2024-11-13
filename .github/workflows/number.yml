@@ -8,10 +8,7 @@ on:
         required: true
         type: string
         default: '1'
-  schedule:
-    #This is a comment, very relevant. Cool!"
-    - cron: '* * 13 11 *'
-
+        
 jobs:
   check-input:
     runs-on: ubuntu-latest
