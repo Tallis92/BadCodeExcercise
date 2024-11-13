@@ -35,12 +35,16 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        version: [8.0, 7.0, 6.0]
+        version: ['8.x', '7.x', '6.x']
     steps:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        version: ${{matrix.version}}
+        dotnet-version: ${{matrix.version}}
+    - name: Build
+      run: dotnet build
+
+        
         
     
   
