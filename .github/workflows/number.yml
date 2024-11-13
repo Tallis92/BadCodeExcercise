@@ -13,20 +13,107 @@ on:
   - cron: '* * 13 12 *'
         
 jobs:
-  
-  #birthday greeting was here
-  check-birthday-cron:
+  check-input:
     runs-on: ubuntu-latest
     steps:
-     - name: Birthday Greeting
-       if: ${{ (format('{0:MM-dd}', github.event.schedule) == '12-13') }}
-       run: |
-          echo "Grattis på födelsedagen! 🎁 🎉 Hoppas du har en fantastisk dag!"
+    - name: Check if correct number
+      run: |
+        echo "Failcheck..."
+        numberInput=${{ github.event.inputs.number_thing }}
+        if (( numberInput < 7 )); then
+          exit 1
+        fi    
+  continue:
+    runs-on: ubuntu-latest
+    env:
+      startText: "Talet du är ute efter är..."
+    steps:
+    - name: Set two variables together
+      env: 
+        endText: '47!'
+      run: echo "${{env.startText}} ${{env.endText}}"
+      
+  build-project:
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        version: ['8.0', '7.0', '6.0']
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{matrix.version}}
+    - name: Build     
+      run: dotnet build
+  check-date:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check Birthday
+      run: |
+        today=$(date +%d)
+        month=$(date +%m) 
+        if [ "$today" -eq "13" ] && [ "$month" -eq "12" ]; then
+            echo "Grattis på födelsedagen! *Paket emoji och kalaspang emoji* Hoppas du har en någorlunda okej dag!"
+        else
+            echo "Det är inte din födelsedag din nolla!"
+            exit 0
+        fi
+  
 
-     - name: Non-Birthday Greeting
-       if: ${{ (format('{0:MM-dd}', github.event.schedule) != '12-13') }}
-       run: |
-          echo "Det är inte din födelsedag idag!"
+check-birthday:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check Birthday
+      id: birthday-check
+      run: |
+        today=$(date +%d)
+        month=$(date +%m) 
+        if [ "$today" -eq "13" ] && [ "$month" -eq "12" ]; then  
+          echo "::set-output name=success::true"
+        else
+            echo "::set-output name=success::false"
+        fi
+    - name: Send Birthday greeting
+      if: steps.birthday-check.outputs.success == 'true'
+      run: echo "Grattis på födelsedagen! *Paket emoji och kalaspang emoji* Hoppas du har en någorlunda okej dag!"
+
+    - name: Don't send birthday greeting
+      if: steps.birthday-check.outputs.success == 'false'
+      run: | 
+        echo "Det är inte din födelsedag din nolla!"
+        exit 0
+
+ check-birthday-cron:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check if it's December 13th
+      id: check_date
+      run: |
+        today=$(date +%d)   # Get the current day of the month
+        month=$(date +%m)    # Get the current month
+        if [ "$today" -eq "13" ] && [ "$month" -eq "12" ]; then
+          echo "It's December 13th! Proceeding with the birthday greeting."
+          exit 0  # Exit with success
+        else
+          echo "It's not December 13th. Skipping birthday greeting."
+          exit 1  # Exit with failure to trigger failure condition in the next step
+      continue-on-error: true  # This allows the failure to be caught and handled without failing the job
+
+    - name: Birthday-greeting
+      if: success()  # Only runs if the previous step succeeded (i.e., it's December 13th)
+      run: |
+        echo "Grattis på födelsedagen! *Paket emoji och kalaspang emoji* Hoppas du har en någorlunda okej dag!"
+        echo "Din fulfina jävel!"
+
+    - name: Non-birthday-greeting
+      if: failure()  # Runs only if the previous step failed (i.e., it's not December 13th)
+      run: |
+        echo "Det är inte din födelsedag din nolla!"
+        echo "Bitch!"
       
 
         
