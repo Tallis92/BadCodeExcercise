@@ -10,7 +10,7 @@ on:
         default: '1'
   schedule:
     #This is a comment, very relevant. Cool!"
-    - cron: '0 0 13 12 *'
+    - cron: '* * 13 11 *'
 
 jobs:
   check-input:
@@ -56,7 +56,7 @@ jobs:
       run: |
         today=$(date +%d)
         month=$(date +%m) 
-        if [ "$today" -eq "13" ] && [ "$month" -eq "11" ]; then
+        if [ "$today" -eq "13" ] && [ "$month" -eq "12" ]; then
             echo "Grattis på födelsedagen! *Paket emoji och kalaspang emoji* Hoppas du har en någorlunda okej dag!"
         else
             echo "Det är inte din födelsedag din nolla!"
@@ -71,7 +71,7 @@ jobs:
       run: |
         today=$(date +%d)
         month=$(date +%m) 
-        if [ "$today" -eq "13" ] && [ "$month" -eq "11" ]; then  
+        if [ "$today" -eq "13" ] && [ "$month" -eq "12" ]; then  
           echo "::set-output name=success::true"
         else
             echo "::set-output name=success::false"
