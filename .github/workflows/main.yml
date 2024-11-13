@@ -1,6 +1,6 @@
 name: Demo Of Variables And Context
 
-on:
+on: 
   workflow_dispatch:
     inputs:
       should_fail:
@@ -12,20 +12,27 @@ on:
 jobs:
   build-project:
     runs-on: ubuntu-latest
+    env:
+      amazingNumber: 42
     steps:
     - name: Step that can fail
       run: |
-        echo "Fail check..."
-        if ["${{inputs.should_fail}}" = "yes"]; then
+        echo "Failcheck..."
+        if [ "${{inputs.should_fail}}" = "yes" ]; then
           exit 1
         fi
+        
     - uses: actions/checkout@v4
-    - name: Build-solution
+    - name: Build solution
       run: dotnet build
-      
-    - name: On-failure
-      if: failure()
+
+    - name: on-failure
+      if: ${{ failure() }}
       run: echo "oops"
+
+    - name: always
+      if: always()
+      run: echo "I always run! Because ${{ env.amazingNumber }} is amazing"
     
       
   github-context:
