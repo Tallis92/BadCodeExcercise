@@ -51,10 +51,17 @@ jobs:
       run: dotnet build
   check-date:
     runs-on: ubuntu-latest
+    if: github.event.schedule ==
     steps:
     - name: Check Birthday
       run: |
-        echo "Grattis på födelsedagen! *Paket emoji och kalaspang emoji* Hoppas du har en någorlunda okej dag!"
+        today=$(date +%d)
+        month=$(date +%m) 
+        if [ "$today" -eq "13" ] && [ "$month" -eq "12" ]; then
+            echo "Grattis på födelsedagen! *Paket emoji och kalaspang emoji* Hoppas du har en någorlunda okej dag!"
+          else
+            echo "Det är inte din födelsedag din nolla!"
+            exit 0
   
 
         
