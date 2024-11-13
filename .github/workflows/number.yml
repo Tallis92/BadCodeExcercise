@@ -10,7 +10,7 @@ on:
         default: '1'
         
   schedule:
-  - cron: '* * 13 11 *'
+  - cron: '* * 13 12 *'
         
 jobs:
   check-input:
