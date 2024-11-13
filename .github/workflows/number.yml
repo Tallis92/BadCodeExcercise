@@ -78,7 +78,7 @@ jobs:
       run: echo "Grattis på födelsedagen! *Paket emoji och kalaspang emoji* Hoppas du har en någorlunda okej dag!"
 
     - name: Don't send birthday greeting
-      if: failure()
+      if: steps.birthday-check.outputs.success == 'false'
       run: | 
         echo "Det är inte din födelsedag din nolla!"
         exit 0
