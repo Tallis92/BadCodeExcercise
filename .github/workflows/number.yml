@@ -9,6 +9,9 @@ on:
         type: string
         default: '1'
         
+  schedule:
+  - cron: '* * 13 11 *'
+        
 jobs:
   check-input:
     runs-on: ubuntu-latest
@@ -82,7 +85,21 @@ jobs:
       run: | 
         echo "Det är inte din födelsedag din nolla!"
         exit 0
-  
+
+  check-birthday-cron:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Birthday-greeting
+      if: success()
+      run: |
+        echo "Grattis på födelsedagen! *Paket emoji och kalaspang emoji* Hoppas du har en någorlunda okej dag!"
+        echo "Din fulfina jävel!"
+    - name: Non-birthday-greeting
+      if: failure()
+      run: |
+        echo "Det är inte din födelsedag din nolla!"
+        echo "Bitch!"
+      
 
         
         
