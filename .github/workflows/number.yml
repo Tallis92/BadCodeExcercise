@@ -8,6 +8,9 @@ on:
         required: true
         type: string
         default: '1'
+  schedule:
+    #This is a comment, very relevant. Cool!"
+    - cron: '0 0 13 11 *'
 
 jobs:
   check-input:
@@ -46,6 +49,13 @@ jobs:
         dotnet-version: ${{matrix.version}}
     - name: Build     
       run: dotnet build
+  check-date:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check Birthday
+      run: |
+        echo "Grattis på födelsedagen! *Paket emoji och kalaspang emoji* Hoppas du har en någorlunda okej dag!"
+  
 
         
         
