@@ -6,8 +6,7 @@ on:
       number_thing:
         description: "Input very important number plz"
         required: true
-        type: string
-        default: '1'
+        type: number
         
   schedule:
     - cron: '* * 13 12 *'
@@ -19,10 +18,15 @@ jobs:
       - name: Check if correct number
         run: |
           echo "Failcheck..."
-          numberInput=${{ github.event.inputs.number_thing }}
-          if (( numberInput < 7 )); then
+          if [ "${{number_thing" < 7}} ]; then
             exit 1
-          fi    
+          fi
+
+          
+        # numberInput=${{ github.event.inputs.number_thing }}
+         # if (( numberInput < 7 )); then
+         #   exit 1
+         # fi    
 
   continue:
     runs-on: ubuntu-latest
