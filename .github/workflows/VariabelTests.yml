@@ -9,10 +9,12 @@ jobs:
     environment:
       Test
     steps:
-    - run: echo "${{ env.MIN_VARIABEL}}"
+    - run: echo "${{ vars.MIN_VARIABEL }}"
+    - run: $MIN_VARIABEL
   print-my-other-variable:
     runs-on: ubuntu-latest
     environment:
       Production
     steps:
-    - run: echo "${{ env.MIN_VARIABEL}}"
+    - run: echo "${{ vars.MIN_VARIABEL }}"
+    - run: $MIN_VARIABEL
