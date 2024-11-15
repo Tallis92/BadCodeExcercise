@@ -1,0 +1,25 @@
+name: CI-CD
+
+on:
+ pull_request:
+   types:
+      - opened
+   branches:
+      - 'main'
+#Build, test, deploy
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    #TODO: summarize output
+    - run: dotnet test
+  deploy:
+    needs: build-and-test
+    if: success()
+    runs-on: ubuntu-latest
+    environment: Test
+    env:
+      SITE_URL: "${{vars.SITE_URL}}"
+    steps:
+    - run: echo "Deploying to $SITE_URL"
