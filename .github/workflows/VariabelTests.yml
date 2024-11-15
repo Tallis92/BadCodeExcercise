@@ -1,0 +1,18 @@
+name: Variable_Tests
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  print-my-variable:
+    runs-on: ubuntu-latest
+    environment:
+      Test
+    steps:
+    - run: echo "${{ env.MIN_VARIABEL}}"
+  print-my-other-variable:
+    runs-on: ubuntu-latest
+    environment:
+      Production
+    steps:
+    - run: echo "${{ env.MIN_VARIABEL}}"
