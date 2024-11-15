@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       Test
+    env:
+      MIN_VARIABEL: "${{ vars.MIN_VARIABEL }}"
     steps:
     - run: echo "${{ vars.MIN_VARIABEL }}"
     - run: $MIN_VARIABEL
@@ -15,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       Production
+    env:
+      MIN_VARIABEL: "${{ vars.MIN_VARIABEL }}"
     steps:
     - run: echo "${{ vars.MIN_VARIABEL }}"
     - run: $MIN_VARIABEL
